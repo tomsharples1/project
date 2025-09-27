@@ -182,9 +182,9 @@ def build_features(
         # sym_feats["symbol"] = sym # this makes another symbol when it was already in the df from the index
         feats.append(sym_feats)
 
-    out = pd.concat(feats, axis=0)
-    out.index.name = None
-    out = out.set_index("symbol", append=True).swaplevel(0, 1).sort_index()
+    out = pd.concat(feats, axis=0).sort_index()
+    # out.index.name = None
+    # out = out.set_index("symbol", append=True).swaplevel(0, 1).sort_index()
 
     # Cross-sectional (per timestamp) transforms
     if include_cross_sectionals:
