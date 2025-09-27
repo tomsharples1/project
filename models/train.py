@@ -266,4 +266,88 @@ def parse_args():
     p.add_argument("--drop_class_zero", action="store_true")
 
     # CV + leakage control
-    p.add_argument("--n_sp
+    p.add_argument("--n_splits", type=int, default=4)
+    p.add_argument("--embargo", type=int, default=10)
+
+    # Train/test split
+    p.add_argument("--test_split_date", type=str, default=None, help="ISO date. Test starts on/after this date.")
+    p.add_argument("--test_frac", type=float, default=None, help="Alternative: last fraction of timestamps as test.")
+    p.add_argument("--save_test_prefix", type=str, default=None, help="If set, save test X/y to <prefix>_features.parquet and <prefix>_labels.parquet")
+    p.add_argument("--eval_test_now", action="store_true", help="If set, evaluate metrics on test holdout immediately.")
+
+    # Model params (kept simple)
+    p.add_argument("--learning_rate", type=float, default=0.03)
+    p.add_argument("--n_estimators", type=int, default=1000)
+    p.add_argument("--subsample", type=float, default=0.7)
+    p.add_argument("--random_state", type=int, default=42)
+    p.add_argument("--force_col_wise", action="store_true")
+
+    # Outputs
+    p.add_argument("--model_out", required=True)
+    p.add_argument("--meta_out", required=True)
+    return p.parse_args()
+
+@dataclass
+class ModelMeta:
+    task: str
+    classes: List[int] | None
+    feature_names: List[str]
+    label_col: str
+    drop_class_zero: bool
+    cv_metrics: dict
+    test_metrics: dict | None
+    test_split_date: str | None
+    test_frac: float | None
+    embargo: int
+
+def main():
+    args = parse_args()
+    X = read_df(args.features_path)
+    y = read_df(args.labels_path)
+    X, y_vec = align_xy(X, y, args.label_col)
+
+    cfg = TrainConfig(
+        task=args.task,
+        label_col=args.label_col,
+        drop_class_zero=args.drop_class_zero,
+        n_splits=args.n_splits,
+        embargo=args.embargo,
+        learning_rate=args.learning_rate,
+        n_estimators=args.n_estimators,
+        subsample=args.subsample,
+        random_state=args.random_state,
+        force_col_wise=args.force_col_wise,
+        test_split_date=args.test_split_date,
+        test_frac=args.test_frac,
+        save_test_prefix=args.save_test_prefix,
+        eval_test_now=args.eval_test_now,
+    )
+
+    result = train(X, y_vec, cfg)
+
+    os.makedirs(os.path.dirname(args.model_out), exist_ok=True)
+    joblib.dump(result["model"], args.model_out)
+
+    meta = ModelMeta(
+        task=args.task,
+        classes=result["classes"],
+        feature_names=result["feature_names"],
+        label_col=args.label_col,
+        drop_class_zero=args.drop_class_zero,
+        cv_metrics=result["cv_metrics"],
+        test_metrics=result["test_metrics"],
+        test_split_date=args.test_split_date,
+        test_frac=args.test_frac,
+        embargo=args.embargo,
+    )
+    with open(args.meta_out, "w") as f:
+        json.dump(asdict(meta), f, indent=2)
+
+    # Pretty print
+    out = {"cv_metrics": result["cv_metrics"]}
+    if result["test_metrics"] is not None:
+        out["test_metrics"] = result["test_metrics"]
+    print(json.dumps(out, indent=2))
+
+if __name__ == "__main__":
+    main()
