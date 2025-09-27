@@ -167,6 +167,7 @@ class TrainConfig:
     # reg_alpha: float
     # reg_lambda: float
     random_state: int
+    force_col_wise: bool
 
 def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
     # Optional: drop "0" class (timeouts) for triple-barrier
@@ -202,6 +203,7 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
             # reg_alpha=cfg.reg_alpha,
             # reg_lambda=cfg.reg_lambda,
             random_state=cfg.random_state,
+            force_col_wise = cfg.force_col_wise, 
             n_jobs=-1
         )
     else:
@@ -214,6 +216,7 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
             # reg_alpha=cfg.reg_alpha,
             # reg_lambda=cfg.reg_lambda,
             random_state=cfg.random_state,
+            force_col_wise = cfg.force_col_wise,
             n_jobs=-1
         )
 
@@ -309,6 +312,7 @@ def main():
         # reg_alpha=args.reg_alpha,
         # reg_lambda=args.reg_lambda,
         random_state=args.random_state,
+        force_col_wise=True
     )
 
     result = train(X, y_vec, cfg)
