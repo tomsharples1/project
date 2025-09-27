@@ -10,8 +10,10 @@ os.makedirs("data", exist_ok=True)
 os.makedirs("artifacts", exist_ok=True)
 
 # ---------- A) Download data ----------
-tickers = ["AAPL", "MSFT", "GOOG"]
-dfy = yf.download(tickers, start="2020-01-01", end="2024-12-31", interval="1d", group_by="ticker", auto_adjust=False)
+xrp = yf.Ticker("XRP-USD")
+
+tickers = [xrp]
+dfy = yf.download(tickers, period='5y', interval="1d", group_by="ticker", auto_adjust=False)
 
 # Reshape to MultiIndex (timestamp, symbol) with lowercase OHLCV
 parts = []

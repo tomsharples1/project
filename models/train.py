@@ -291,45 +291,4 @@ def main():
     X = read_df(args.features_path)
     y = read_df(args.labels_path)
 
-    X, y_vec = align_xy(X, y, args.label_col)
-
-    cfg = TrainConfig(
-        task=args.task,
-        label_col=args.label_col,
-        drop_class_zero=args.drop_class_zero,
-        n_splits=args.n_splits,
-        embargo=args.embargo,
-        learning_rate=args.learning_rate,
-        n_estimators=args.n_estimators,
-        # num_leaves=args.num_leaves,
-        subsample=args.subsample,
-        # colsample_bytree=args.colsample_bytree,
-        # reg_alpha=args.reg_alpha,
-        # reg_lambda=args.reg_lambda,
-        random_state=args.random_state,
-        force_col_wise=True
-    )
-
-    result = train(X, y_vec, cfg)
-
-    # Save artifacts
-    os.makedirs(os.path.dirname(args.model_out), exist_ok=True)
-    joblib.dump(result["model"], args.model_out)
-
-    meta = ModelMeta(
-    task=args.task,
-    classes=[int(c) for c in (result["classes"] or [])] if args.task == "classification" else None,
-    feature_names=result["feature_names"],
-    label_col=args.label_col,
-    drop_class_zero=args.drop_class_zero,
-    cv_metrics=result["cv_metrics"],
-    )
-
-    with open(args.meta_out, "w") as f:
-        json.dump(asdict(meta), f, indent=2)
-
-    # Print CV metrics to stdout
-    print(json.dumps(result["cv_metrics"], indent=2))
-
-if __name__ == "__main__":
-    main()
+    X, y_vec = align_xy(X, y, args.label_col
