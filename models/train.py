@@ -58,18 +58,32 @@ def align_xy(X: pd.DataFrame, y: pd.DataFrame | pd.Series, label_col: str) -> Tu
 
 def infer_time_index(X: pd.DataFrame) -> pd.Series:
     """
-    Return a DatetimeIndex (timestamps) aligned with rows for CV splitting.
-    Works with MultiIndex (timestamp, symbol) or single datetime index.
+    Return a DatetimeIndex aligned with rows for CV splitting.
+    Works with MultiIndex in any order; prefers a level literally named
+    'timestamp' or the level that most successfully parses as datetime.
     """
-    if isinstance(X.index, pd.MultiIndex):
-        ts = X.index.get_level_values(0)
-        if not isinstance(ts, pd.DatetimeIndex):
-            ts = pd.to_datetime(ts)
-        return ts
-    if isinstance(X.index, pd.DatetimeIndex):
-        return X.index
-    # Last resort: try to coerce
-    return pd.to_datetime(X.index)
+    idx = X.index
+    if isinstance(idx, pd.MultiIndex):
+        # 1) Prefer level named 'timestamp'
+        if idx.names and "timestamp" in idx.names:
+            lvl = idx.names.index("timestamp")
+            ts = pd.to_datetime(idx.get_level_values(lvl), errors="coerce")
+            return ts
+        # 2) Otherwise, pick the level with the most valid datetimes
+        best_ts, best_count = None, -1
+        for lvl in range(idx.nlevels):
+            cand = pd.to_datetime(idx.get_level_values(lvl), errors="coerce")
+            count = cand.notna().sum()
+            if count > best_count:
+                best_ts, best_count = cand, count
+        if best_ts is None or best_ts.notna().sum() == 0:
+            raise ValueError("Could not infer a datetime-like index level.")
+        return best_ts
+    elif isinstance(idx, pd.DatetimeIndex):
+        return idx
+    else:
+        return pd.to_datetime(idx, errors="raise")
+
 
 def unique_sorted_times(ts: pd.Series) -> np.ndarray:
     return np.array(pd.Index(ts).unique().sort_values())
