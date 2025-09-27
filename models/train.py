@@ -53,12 +53,16 @@ def infer_time_index(X: pd.DataFrame) -> pd.Series:
     return pd.to_datetime(idx, errors="raise")
 
 def unique_sorted_times(ts: pd.Series) -> np.ndarray:
-    return np.array(pd.Index(ts).unique().sort_values())
+    # FORCE datetime64[ns], drop NaT, return a proper DatetimeIndex-backed ndarray
+    ts = pd.to_datetime(pd.Series(ts), errors="coerce")
+    ts = ts[ts.notna()]
+    return pd.DatetimeIndex(ts).unique().sort_values().to_numpy(dtype="datetime64[ns]")
 
 def time_series_purged_splits(times: pd.Series, n_splits: int = 4, embargo: int = 5) -> Iterable[Tuple[np.ndarray, np.ndarray]]:
     uniq = unique_sorted_times(times)
     if n_splits < 1 or len(uniq) < (n_splits + 1):
         raise ValueError("Not enough unique timestamps for the requested n_splits.")
+    
     fold = len(uniq) // (n_splits + 1)
     for i in range(n_splits):
         train_end_t = uniq[(i + 1) * fold - 1]
@@ -78,27 +82,52 @@ def apply_time_holdout(times: pd.Series,
     """
     Returns boolean masks (train_mask, test_mask) with an embargo gap between them.
     """
-    ts = times
-    uniq = unique_sorted_times(ts)
+    # normalize times first
+    ts = pd.to_datetime(pd.Series(times), errors="coerce")
+    ts.index = times.index  # keep original index alignment
+    ts = ts[ts.notna()]     # drop NaT
+
+    # build masks aligned to original X/y index
+    base_mask = times.index.isin(ts.index)
+    # start with all-False, fill where we have valid timestamps
+    train_mask = pd.Series(False, index=times.index)
+    test_mask  = pd.Series(False, index=times.index)
+
+    uniq = pd.DatetimeIndex(ts).unique().sort_values()
+
+    if len(uniq) == 0:
+        raise ValueError("No valid timestamps found after coercion. Check index levels and data types.")
+
     if test_split_date:
         test_start = pd.Timestamp(test_split_date)
-        test_mask = ts >= test_start
     else:
-        if not (0.0 < (test_frac or 0) < 1.0):
+        if not (test_frac and 0.0 < float(test_frac) < 1.0):
             raise ValueError("Provide --test_split_date or a 0<--test_frac<1.")
-        cut_idx = int(len(uniq) * (1.0 - test_frac))
-        test_start = uniq[cut_idx] if cut_idx < len(uniq) else uniq[-1]
-        test_mask = ts >= test_start
-    # Embargo: remove last `embargo` unique timestamps from train before test_start
+        cut_idx = int(len(uniq) * (1.0 - float(test_frac)))
+        cut_idx = min(max(cut_idx, 0), len(uniq) - 1)
+        test_start = uniq[cut_idx]
+
+    # positions via DatetimeIndex.searchsorted (type-safe)
+    test_start_pos = uniq.searchsorted(pd.Timestamp(test_start))
+
     if embargo > 0:
-        test_start_pos = np.searchsorted(uniq, pd.Timestamp(test_start))
         embargo_end_pos = max(0, test_start_pos - embargo)
         train_end_time = uniq[embargo_end_pos - 1] if embargo_end_pos > 0 else pd.Timestamp.min
-        train_mask = ts <= train_end_time
+        tr_sel = (ts <= train_end_time)
     else:
-        train_mask = ts < pd.Timestamp(test_start)
-    return train_mask, test_mask
+        tr_sel = (ts < pd.Timestamp(test_start))
 
+    te_sel = (ts >= pd.Timestamp(test_start))
+
+    # map selections back to the original index
+    train_mask.loc[tr_sel.index] = tr_sel.values
+    test_mask.loc[te_sel.index]  = te_sel.values
+
+    # ensure only rows with valid timestamps are considered
+    train_mask &= base_mask
+    test_mask  &= base_mask
+
+    return train_mask.values, test_mask.values
 
 # ---------- Metrics ----------
 def metrics_classification(y_true: np.ndarray, proba: np.ndarray, labels: List[int]) -> dict:
@@ -162,9 +191,11 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
     row_ok = X.notna().sum(axis=1) >= min_non_null
     X, y = X.loc[row_ok], y.loc[row_ok]
 
-    times_all = infer_time_index(X)
+    times_all = pd.to_datetime(infer_time_index(X), errors="coerce")
+    valid_time = times_all.notna()
+    X, y = X.loc[valid_time], y.loc[valid_time]
+    times_all = times_all.loc[valid_time]
 
-    # ---- Train/Test split by time with embargo
     tr_mask, te_mask = apply_time_holdout(times_all, cfg.test_split_date, cfg.test_frac, cfg.embargo)
     Xtr, ytr = X.loc[tr_mask], y.loc[tr_mask]
     Xte, yte = X.loc[te_mask], y.loc[te_mask]
