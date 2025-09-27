@@ -179,7 +179,7 @@ def build_features(
         atr = _atr(gdf, atr_window)
 
         sym_feats = pd.concat([ret, vol, rsi, macd, vwapd, atr], axis=1)
-        sym_feats["symbol"] = sym
+        # sym_feats["symbol"] = sym # this makes another symbol when it was already in the df from the index
         feats.append(sym_feats)
 
     out = pd.concat(feats, axis=0)

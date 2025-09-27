@@ -9,9 +9,6 @@ from features.label_triple_barrier import triple_barrier_labels, forward_return_
 os.makedirs("data", exist_ok=True)
 os.makedirs("artifacts", exist_ok=True)
 
-# ---------- A) Download data ----------
-xrp = yf.Ticker("XRP-USD")
-
 tickers = ['AAPL', 'TSLA', 'MSFT']
 dfy = yf.download(tickers, period='5y', interval="1d", group_by="ticker", auto_adjust=False)
 
