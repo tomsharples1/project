@@ -237,7 +237,7 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
     return {
         "model": model,
         "cv_metrics": agg,
-        "classes": sorted(np.unique(y)) if cfg.task == "classification" else None,
+        "classes": [int(c) for c in sorted(np.unique(y))] if cfg.task == "classification" else None, 
         "feature_names": list(X.columns)
     }
 
@@ -304,13 +304,14 @@ def main():
     joblib.dump(result["model"], args.model_out)
 
     meta = ModelMeta(
-        task=args.task,
-        classes=result["classes"],
-        feature_names=result["feature_names"],
-        label_col=args.label_col,
-        drop_class_zero=args.drop_class_zero,
-        cv_metrics=result["cv_metrics"],
+    task=args.task,
+    classes=[int(c) for c in (result["classes"] or [])] if args.task == "classification" else None,
+    feature_names=result["feature_names"],
+    label_col=args.label_col,
+    drop_class_zero=args.drop_class_zero,
+    cv_metrics=result["cv_metrics"],
     )
+
     with open(args.meta_out, "w") as f:
         json.dump(asdict(meta), f, indent=2)
 
