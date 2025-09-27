@@ -1,4 +1,39 @@
 {
   "task": "classification",
   "classes": [
-    
+    -1,
+    1
+  ],
+  "feature_names": [
+    "ret_1",
+    "ret_5",
+    "ret_20",
+    "vol_5",
+    "vol_20",
+    "vol_60",
+    "rsi_14",
+    "macd_12_26",
+    "macd_signal_9",
+    "macd_hist_12_26_9",
+    "dist_vwap_20",
+    "atr_14",
+    "ret_5_rank",
+    "ret_5_xz",
+    "ret_20_rank",
+    "ret_20_xz",
+    "vol_20_rank",
+    "vol_20_xz",
+    "vol_60_rank",
+    "vol_60_xz",
+    "rsi_14_rank",
+    "rsi_14_xz"
+  ],
+  "label_col": "label",
+  "drop_class_zero": true,
+  "cv_metrics": {
+    "auc_roc": 0.520612656335023,
+    "auc_pr": 0.5734340296721907,
+    "f1": 0.5758801782984584,
+    "log_loss": 0.9489949698907157
+  }
+}
