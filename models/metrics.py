@@ -62,7 +62,7 @@ def classification_report(y_true: pd.Series, pred: pd.DataFrame | pd.Series, pos
 
 def regression_report(y_true: pd.Series, y_pred: pd.Series) -> dict:
     return {
-        "rmse": float(mean_squared_error(y_true, y_pred, squared=False)),
+        "mse": float(mean_squared_error(y_true, y_pred)),
         "mae": float(mean_absolute_error(y_true, y_pred)),
         "r2": float(r2_score(y_true, y_pred)),
     }
