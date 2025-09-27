@@ -178,11 +178,6 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
     mask_y = y.notna()
     X, y = X.loc[mask_y], y.loc[mask_y]
 
-    # Drop rows where all features are NaN
-    X = X.dropna(how="all")
-    y = y.loc[X.index]
-
-    # (Optional) Require at least some non-NaN features
     min_non_null = int(0.2 * X.shape[1])  # at least 20% of features not NaN
     row_ok = X.notna().sum(axis=1) >= min_non_null
     X, y = X.loc[row_ok], y.loc[row_ok]
