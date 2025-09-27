@@ -161,11 +161,11 @@ class TrainConfig:
     embargo: int
     learning_rate: float
     n_estimators: int
-    num_leaves: int
+    # num_leaves: int
     subsample: float
-    colsample_bytree: float
-    reg_alpha: float
-    reg_lambda: float
+    # colsample_bytree: float
+    # reg_alpha: float
+    # reg_lambda: float
     random_state: int
 
 def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
@@ -196,11 +196,11 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
             objective=objective,
             n_estimators=cfg.n_estimators,
             learning_rate=cfg.learning_rate,
-            num_leaves=cfg.num_leaves,
+            # num_leaves=cfg.num_leaves,
             subsample=cfg.subsample,
-            colsample_bytree=cfg.colsample_bytree,
-            reg_alpha=cfg.reg_alpha,
-            reg_lambda=cfg.reg_lambda,
+            # colsample_bytree=cfg.colsample_bytree,
+            # reg_alpha=cfg.reg_alpha,
+            # reg_lambda=cfg.reg_lambda,
             random_state=cfg.random_state,
             n_jobs=-1
         )
@@ -208,11 +208,11 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
         base_model = LGBMRegressor(
             n_estimators=cfg.n_estimators,
             learning_rate=cfg.learning_rate,
-            num_leaves=cfg.num_leaves,
+            # num_leaves=cfg.num_leaves,
             subsample=cfg.subsample,
-            colsample_bytree=cfg.colsample_bytree,
-            reg_alpha=cfg.reg_alpha,
-            reg_lambda=cfg.reg_lambda,
+            # colsample_bytree=cfg.colsample_bytree,
+            # reg_alpha=cfg.reg_alpha,
+            # reg_lambda=cfg.reg_lambda,
             random_state=cfg.random_state,
             n_jobs=-1
         )
@@ -303,11 +303,11 @@ def main():
         embargo=args.embargo,
         learning_rate=args.learning_rate,
         n_estimators=args.n_estimators,
-        num_leaves=args.num_leaves,
+        # num_leaves=args.num_leaves,
         subsample=args.subsample,
-        colsample_bytree=args.colsample_bytree,
-        reg_alpha=args.reg_alpha,
-        reg_lambda=args.reg_lambda,
+        # colsample_bytree=args.colsample_bytree,
+        # reg_alpha=args.reg_alpha,
+        # reg_lambda=args.reg_lambda,
         random_state=args.random_state,
     )
 

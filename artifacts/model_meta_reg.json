@@ -1,9 +1,6 @@
 {
-  "task": "classification",
-  "classes": [
-    -1,
-    1
-  ],
+  "task": "regression",
+  "classes": null,
   "feature_names": [
     "ret_1",
     "ret_5",
@@ -28,12 +25,11 @@
     "rsi_14_rank",
     "rsi_14_xz"
   ],
-  "label_col": "label",
-  "drop_class_zero": true,
+  "label_col": "y",
+  "drop_class_zero": false,
   "cv_metrics": {
-    "auc_roc": 0.520612656335023,
-    "auc_pr": 0.5734340296721907,
-    "f1": 0.5758801782984584,
-    "log_loss": 0.9489949698907157
+    "mse": 0.0015297918302824968,
+    "mae": 0.030456879740247536,
+    "r2": -0.11509905954491934
   }
 }
