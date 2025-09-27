@@ -41,4 +41,4 @@ y_reg.to_frame("y").to_parquet("data/labels_reg.parquet", engine='fastparquet', 
 print("Saved:")
 print("  data/features.parquet")
 print("  data/labels_cls.parquet (columns: t1, label, ret)")
-print("  data/labels_reg.parquet (column: y)
+print("  data/labels_reg.parquet (column: y)")
