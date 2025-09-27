@@ -24,7 +24,6 @@ import pandas as pd
 
 REQUIRED_COLS = ["open", "high", "low", "close", "volume"]
 
-
 def _to_multiindex(df: pd.DataFrame) -> pd.DataFrame:
     """Normalize to MultiIndex (timestamp, symbol)."""
     df = df.copy()
@@ -37,12 +36,11 @@ def _to_multiindex(df: pd.DataFrame) -> pd.DataFrame:
     assert "symbol" in df.columns, "Expected a 'symbol' column when index is not MultiIndex."
     assert set(REQUIRED_COLS).issubset(df.columns), \
         f"Missing required columns: {set(REQUIRED_COLS) - set(df.columns)}"
-    return (
-        df
-        .set_index(["symbol"], append=True)   # index -> (timestamp, symbol)
-        .swaplevel(0, 1)
-        .sort_index()
-    )
+    
+    df =  df.set_index(["symbol"], append=True)   # index -> (timestamp, symbol)
+    df.index.set_names(["timestamp", "symbol"], inplace=True)
+
+    return df.sort_index()
 
 
 def _groupby_symbol(mi_df: pd.DataFrame):

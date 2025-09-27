@@ -36,7 +36,7 @@ print(f"Fetching data for: {', '.join(tickers)}")
 # Download more data for better model training
 data = yf.download(
     tickers, 
-    period='3y',  # 3 years of data
+    period='5y',
     interval="1d", 
     group_by="ticker", 
     auto_adjust=False,
