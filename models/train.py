@@ -176,6 +176,11 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
 
     # Replace infs; LightGBM can handle NaNs but not infs.
     X = X.replace([np.inf, -np.inf], np.nan)
+    
+    min_non_null = max(1, int(0.2 * X.shape[1]))  # at least 20% features present
+    row_good = X.notna().sum(axis=1) >= min_non_null
+    X, y = X.loc[row_good], y.loc[row_good]
+
 
     times = infer_time_index(X)
     splits = list(time_series_purged_splits(times, cfg.n_splits, cfg.embargo))
