@@ -32,11 +32,11 @@ from sklearn.metrics import (
     roc_auc_score, average_precision_score, f1_score, log_loss,
     mean_squared_error, mean_absolute_error, r2_score
 )
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
 from lightgbm import LGBMClassifier, LGBMRegressor
 
-
 # ---------- Utilities ----------
-
 def read_df(path: str) -> pd.DataFrame:
     if path.lower().endswith(".parquet"):
         return pd.read_parquet(path)
@@ -176,11 +176,6 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
 
     # Replace infs; LightGBM can handle NaNs but not infs.
     X = X.replace([np.inf, -np.inf], np.nan)
-    
-    min_non_null = max(1, int(0.2 * X.shape[1]))  # at least 20% features present
-    row_good = X.notna().sum(axis=1) >= min_non_null
-    X, y = X.loc[row_good], y.loc[row_good]
-
 
     times = infer_time_index(X)
     splits = list(time_series_purged_splits(times, cfg.n_splits, cfg.embargo))
@@ -188,7 +183,7 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
     if cfg.task == "classification":
         classes = sorted(np.unique(y.dropna()))
         objective = "binary" if len(classes) == 2 else "multiclass"
-        model = LGBMClassifier(
+        base_model = LGBMClassifier(
             objective=objective,
             n_estimators=cfg.n_estimators,
             learning_rate=cfg.learning_rate,
@@ -201,7 +196,7 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
             n_jobs=-1
         )
     else:
-        model = LGBMRegressor(
+        base_model = LGBMRegressor(
             n_estimators=cfg.n_estimators,
             learning_rate=cfg.learning_rate,
             num_leaves=cfg.num_leaves,
@@ -212,6 +207,11 @@ def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
             random_state=cfg.random_state,
             n_jobs=-1
         )
+
+    model = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="median")),
+    ("model", base_model)
+    ])  
 
     # Cross-validated training (rolling)
     cv_scores = []
