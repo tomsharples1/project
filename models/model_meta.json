@@ -1,0 +1,48 @@
+{
+  "task": "classification",
+  "classes": [
+    -1,
+    1
+  ],
+  "feature_names": [
+    "ret_1",
+    "ret_5",
+    "ret_20",
+    "vol_5",
+    "vol_20",
+    "vol_60",
+    "rsi_14",
+    "macd_12_26",
+    "macd_signal_9",
+    "macd_hist_12_26_9",
+    "dist_vwap_20",
+    "atr_14",
+    "ret_5_rank",
+    "ret_5_xz",
+    "ret_20_rank",
+    "ret_20_xz",
+    "vol_20_rank",
+    "vol_20_xz",
+    "vol_60_rank",
+    "vol_60_xz",
+    "rsi_14_rank",
+    "rsi_14_xz"
+  ],
+  "label_col": "label",
+  "drop_class_zero": true,
+  "cv_metrics": {
+    "auc_roc": 0.5319296162388334,
+    "auc_pr": 0.5717539338416819,
+    "f1_at_0.5": 0.5817249296542607,
+    "log_loss": 1.251021620396616
+  },
+  "test_metrics": {
+    "auc_roc": 0.5336026598977512,
+    "auc_pr": 0.5830357423293296,
+    "f1_at_0.5": 0.5861244019138756,
+    "log_loss": 0.8386450307633849
+  },
+  "test_split_date": null,
+  "test_frac": 0.2,
+  "embargo": 10
+}
