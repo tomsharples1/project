@@ -34,23 +34,39 @@ def align_xy(X: pd.DataFrame, y: pd.DataFrame | pd.Series, label_col: str) -> Tu
     return both[cols], both["y"]
 
 def infer_time_index(X: pd.DataFrame) -> pd.Series:
+    """
+    Return a datetime Series aligned to X.index.
+    Works for:
+      - MultiIndex with ('timestamp', 'symbol') in any order
+      - Plain DatetimeIndex
+      - Plain index of strings to be parsed as dates
+    """
     idx = X.index
     if isinstance(idx, pd.MultiIndex):
+        # Prefer a level literally named 'timestamp'
         if idx.names and "timestamp" in idx.names:
             lvl = idx.names.index("timestamp")
-            return pd.to_datetime(idx.get_level_values(lvl), errors="coerce")
-        best_ts, best_count = None, -1
-        for lvl in range(idx.nlevels):
-            cand = pd.to_datetime(idx.get_level_values(lvl), errors="coerce")
-            cnt = cand.notna().sum()
-            if cnt > best_count:
-                best_ts, best_count = cand, cnt
-        if best_ts is None or best_ts.notna().sum() == 0:
-            raise ValueError("Could not infer a datetime-like index level.")
-        return best_ts
-    if isinstance(idx, pd.DatetimeIndex):
-        return idx
-    return pd.to_datetime(idx, errors="raise")
+            ts = pd.to_datetime(idx.get_level_values(lvl), errors="coerce")
+        else:
+            # Try each level, pick the one with most valid datetimes
+            best_ts, best_ok = None, -1
+            for lvl in range(idx.nlevels):
+                cand = pd.to_datetime(idx.get_level_values(lvl), errors="coerce")
+                ok = cand.notna().sum()
+                if ok > best_ok:
+                    best_ts, best_ok = cand, ok
+            ts = best_ts
+    elif isinstance(idx, pd.DatetimeIndex):
+        ts = pd.Series(idx, index=idx)
+    else:
+        ts = pd.to_datetime(pd.Series(idx, index=idx), errors="coerce")
+
+    # Ensure it's a Series indexed exactly like X
+    if not isinstance(ts, pd.Series):
+        ts = pd.Series(ts, index=X.index)
+    else:
+        ts.index = X.index
+    return ts
 
 def unique_sorted_times(ts: pd.Series) -> np.ndarray:
     # FORCE datetime64[ns], drop NaT, return a proper DatetimeIndex-backed ndarray
@@ -75,57 +91,59 @@ def time_series_purged_splits(times: pd.Series, n_splits: int = 4, embargo: int 
         val_mask = (times >= val_start_t) & (times <= val_end_t)
         yield np.where(train_mask)[0], np.where(val_mask)[0]
 
-def apply_time_holdout(times: pd.Series,
-                       test_split_date: Optional[str],
-                       test_frac: Optional[float],
-                       embargo: int) -> Tuple[np.ndarray, np.ndarray]:
+def apply_time_holdout(
+    times: pd.Series,
+    test_split_date: Optional[str],
+    test_frac: Optional[float],
+    embargo: int
+) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Returns boolean masks (train_mask, test_mask) with an embargo gap between them.
+    Build boolean masks for train/test by time, with an optional embargo.
+    - If test_split_date is given: test = ts >= that date
+    - Else if test_frac is given: test = last fraction of unique timestamps
+    - Embargo removes the last `embargo` unique timestamps from the train set
+      immediately before the test start.
     """
-    # normalize times first
-    ts = pd.to_datetime(pd.Series(times), errors="coerce")
-    ts.index = times.index  # keep original index alignment
-    ts = ts[ts.notna()]     # drop NaT
+    # 1) coerce to datetime and keep alignment
+    ts = pd.to_datetime(times, errors="coerce")
+    if not ts.index.equals(times.index):
+        ts.index = times.index
 
-    # build masks aligned to original X/y index
-    base_mask = times.index.isin(ts.index)
-    # start with all-False, fill where we have valid timestamps
-    train_mask = pd.Series(False, index=times.index)
-    test_mask  = pd.Series(False, index=times.index)
+    # drop rows with invalid time (rare)
+    valid = ts.notna()
+    ts = ts[valid]
 
+    # 2) decide test start
     uniq = pd.DatetimeIndex(ts).unique().sort_values()
-
     if len(uniq) == 0:
-        raise ValueError("No valid timestamps found after coercion. Check index levels and data types.")
+        raise ValueError("No valid timestamps to split on.")
 
     if test_split_date:
         test_start = pd.Timestamp(test_split_date)
     else:
-        if not (test_frac and 0.0 < float(test_frac) < 1.0):
+        if not (test_frac and 0 < float(test_frac) < 1):
             raise ValueError("Provide --test_split_date or a 0<--test_frac<1.")
         cut_idx = int(len(uniq) * (1.0 - float(test_frac)))
         cut_idx = min(max(cut_idx, 0), len(uniq) - 1)
         test_start = uniq[cut_idx]
 
-    # positions via DatetimeIndex.searchsorted (type-safe)
-    test_start_pos = uniq.searchsorted(pd.Timestamp(test_start))
-
+    # 3) embargo handling
     if embargo > 0:
-        embargo_end_pos = max(0, test_start_pos - embargo)
-        train_end_time = uniq[embargo_end_pos - 1] if embargo_end_pos > 0 else pd.Timestamp.min
-        tr_sel = (ts <= train_end_time)
+        # position of test_start in uniq
+        pos = uniq.searchsorted(test_start)
+        embargo_pos = max(0, pos - embargo)
+        train_end_time = uniq[embargo_pos - 1] if embargo_pos > 0 else pd.Timestamp.min
+        train_sel = ts <= train_end_time
     else:
-        tr_sel = (ts < pd.Timestamp(test_start))
+        train_sel = ts < test_start
 
-    te_sel = (ts >= pd.Timestamp(test_start))
+    test_sel = ts >= test_start
 
-    # map selections back to the original index
-    train_mask.loc[tr_sel.index] = tr_sel.values
-    test_mask.loc[te_sel.index]  = te_sel.values
-
-    # ensure only rows with valid timestamps are considered
-    train_mask &= base_mask
-    test_mask  &= base_mask
+    # 4) map back to full index (rows with NaT become False in both masks)
+    train_mask = pd.Series(False, index=times.index)
+    test_mask  = pd.Series(False, index=times.index)
+    train_mask.loc[train_sel.index] = train_sel.values
+    test_mask.loc[test_sel.index]   = test_sel.values
 
     return train_mask.values, test_mask.values
 
@@ -181,24 +199,28 @@ class TrainConfig:
     eval_test_now: bool
 
 def train(X: pd.DataFrame, y: pd.Series, cfg: TrainConfig) -> dict:
-    # Optional: drop "0" class (timeouts) for triple-barrier
+    
     if cfg.task == "classification" and cfg.drop_class_zero:
-        m = y != 0
-        X, y = X.loc[m], y.loc[m]
+        ok = y != 0
+        X, y = X.loc[ok], y.loc[ok]
 
-    # Require at least 20% non-NaN features
+    X = X.replace([np.inf, -np.inf], np.nan)
+    y = y[y.notna()]
+    X = X.loc[y.index]                 # align
+
+    # require at least 20% non-NaN features
     min_non_null = max(1, int(0.2 * X.shape[1]))
     row_ok = X.notna().sum(axis=1) >= min_non_null
     X, y = X.loc[row_ok], y.loc[row_ok]
 
-    times_all = pd.to_datetime(infer_time_index(X), errors="coerce")
-    valid_time = times_all.notna()
-    X, y = X.loc[valid_time], y.loc[valid_time]
-    times_all = times_all.loc[valid_time]
+    # Build time series
+    times_all = infer_time_index(X)
 
+    # Split
     tr_mask, te_mask = apply_time_holdout(times_all, cfg.test_split_date, cfg.test_frac, cfg.embargo)
     Xtr, ytr = X.loc[tr_mask], y.loc[tr_mask]
     Xte, yte = X.loc[te_mask], y.loc[te_mask]
+
 
     # CV only on the train period
     splits = list(time_series_purged_splits(infer_time_index(Xtr), cfg.n_splits, cfg.embargo))

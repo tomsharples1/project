@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Local data & models
+data/
+artifacts/
+
+# Common large files
+*.parquet
+*.pkl
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Local data & models
+data/
+artifacts/
+
+# Common large files
+*.parquet
+*.pkl
