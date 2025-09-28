@@ -105,13 +105,19 @@ def parse_args():
 
 def main():
     args = parse_args()
+    
+    # load data
+    X = read_df(args.features_path)
 
-    # Load
-    X = apply_meta_test_filter(X, meta)
-
+    # Load meta
     with open(args.meta_path, "r") as fh:
         meta = json.load(fh)
+
     model = joblib.load(args.model_path)
+
+    # Apply test filter if requested
+    if args.use_test_from_meta:
+        X = apply_meta_test_filter(X, meta)
     
     # Explicit date bounds have priority if provided
     if args.start_date or args.end_date:

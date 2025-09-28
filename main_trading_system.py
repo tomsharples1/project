@@ -43,7 +43,7 @@ class TradingSystemConfig:
     def __init__(self):
         # Data settings
         self.symbols = ['AAPL', 'MSFT', 'GOOGL', 'TSLA', 'AMZN', 'NVDA', 'META']
-        self.data_period = '2y'  # yfinance period
+        self.data_period = '5y'  # yfinance period
         self.data_interval = '1d'  # daily data
         
         # Model settings

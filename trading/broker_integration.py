@@ -131,19 +131,18 @@ class BrokerInterface(ABC):
 class AlpacaBroker(BrokerInterface):
     """Alpaca broker interface for paper trading."""
     
-    def __init__(self, paper: bool = True):
+    def __init__(self):
         if not ALPACA_AVAILABLE:
             raise ImportError("alpaca-trade-api not installed")
         
         self.api_key = 'PK04F356F2M6A5W45FYA' 
         self.secret_key = 'V9UwmBmdBtwBG9v0aYFCind1xbZBKt9KcIEQFSUe'
-        self.paper = paper
         self.api = None
         
     def connect(self) -> bool:
         """Connect to Alpaca API."""
         try:
-            base_url = 'https://paper-api.alpaca.markets' if self.paper else 'https://api.alpaca.markets'
+            base_url = 'https://paper-api.alpaca.markets'
             self.api = tradeapi.REST(self.api_key, self.secret_key, base_url, api_version='v2')
             
             # Test connection
@@ -556,17 +555,8 @@ class TradingEngine:
 
 
 # Example configuration and usage
-def setup_alpaca_paper_trading():
-    """Setup Alpaca paper trading (you need to get API keys from Alpaca)."""
-    # You need to sign up at alpaca.markets and get your API keys
-    API_KEY = "YOUR_ALPACA_API_KEY"
-    SECRET_KEY = "YOUR_ALPACA_SECRET_KEY"
-    
-    if API_KEY == "YOUR_ALPACA_API_KEY":
-        print("Please set your Alpaca API credentials")
-        return None
-    
-    broker = AlpacaBroker(API_KEY, SECRET_KEY, paper=True)
+def setup_alpaca_paper_trading(): 
+    broker = AlpacaBroker()
     return TradingEngine(broker)
 
 

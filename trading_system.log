@@ -31,3 +31,270 @@
 2025-09-27 05:35:40,753 - ERROR - Failed to generate trading signals
 2025-09-27 05:35:40,754 - WARNING - Trading cycle failed, continuing...
 2025-09-27 05:35:40,754 - INFO - Waiting 60 minutes until next cycle...
+2025-09-27 23:39:43,461 - WARNING - Failed to connect to trading engine, using simulation
+2025-09-27 23:39:46,069 - INFO - Loaded model trained on 23 features
+2025-09-27 23:39:50,959 - INFO - Running single trading cycle...
+2025-09-27 23:39:50,959 - INFO - ============================================================
+2025-09-27 23:39:50,960 - INFO - Starting trading cycle
+2025-09-27 23:39:50,960 - INFO - ============================================================
+2025-09-27 23:39:50,960 - INFO - Fetching market data for 7 symbols...
+2025-09-27 23:39:51,393 - INFO - Retrieved 3514 rows of market data
+2025-09-27 23:39:52,004 - INFO - Generating features...
+2025-09-27 23:39:52,706 - INFO - Generated 22 features for 3514 rows
+2025-09-27 23:39:52,706 - INFO - Generating ML predictions...
+2025-09-27 23:39:53,118 - INFO - Generated predictions for 7 symbols
+2025-09-27 23:39:53,118 - INFO - Generating trading signals...
+2025-09-27 23:39:53,128 - INFO - No trading signals generated
+2025-09-27 23:39:53,129 - INFO - No signals to execute or trading engine not available
+2025-09-27 23:39:53,129 - INFO - No trades executed this cycle
+2025-09-27 23:39:53,131 - INFO - Portfolio Value: $100,000.00
+2025-09-27 23:39:53,131 - INFO - Cash: $100,000.00
+2025-09-27 23:39:53,131 - INFO - Positions: 0
+2025-09-27 23:39:53,131 - INFO - Trading cycle completed successfully
+2025-09-27 23:40:12,697 - WARNING - Failed to connect to trading engine, using simulation
+2025-09-27 23:40:14,745 - INFO - Loaded model trained on 23 features
+2025-09-27 23:40:25,100 - INFO - Starting live trading system...
+2025-09-27 23:40:25,101 - INFO - Check interval: 60 minutes
+2025-09-27 23:40:25,101 - INFO - ============================================================
+2025-09-27 23:40:25,102 - INFO - Starting trading cycle
+2025-09-27 23:40:25,102 - INFO - ============================================================
+2025-09-27 23:40:25,102 - INFO - Fetching market data for 7 symbols...
+2025-09-27 23:40:25,598 - INFO - Retrieved 3514 rows of market data
+2025-09-27 23:40:25,682 - INFO - Generating features...
+2025-09-27 23:40:25,797 - INFO - Generated 22 features for 3514 rows
+2025-09-27 23:40:25,797 - INFO - Generating ML predictions...
+2025-09-27 23:40:25,819 - INFO - Generated predictions for 7 symbols
+2025-09-27 23:40:25,819 - INFO - Generating trading signals...
+2025-09-27 23:40:25,831 - INFO - No trading signals generated
+2025-09-27 23:40:25,832 - INFO - No signals to execute or trading engine not available
+2025-09-27 23:40:25,832 - INFO - No trades executed this cycle
+2025-09-27 23:40:25,835 - INFO - Portfolio Value: $100,000.00
+2025-09-27 23:40:25,835 - INFO - Cash: $100,000.00
+2025-09-27 23:40:25,835 - INFO - Positions: 0
+2025-09-27 23:40:25,835 - INFO - Trading cycle completed successfully
+2025-09-27 23:40:25,835 - INFO - Waiting 60 minutes until next cycle...
+2025-09-27 23:40:37,098 - INFO - Shutting down trading system...
+2025-09-27 23:40:37,098 - INFO - Trading system shutdown complete
+2025-09-27 23:40:49,485 - WARNING - Failed to connect to trading engine, using simulation
+2025-09-27 23:40:52,748 - INFO - Loaded model trained on 23 features
+2025-09-27 23:40:54,244 - INFO - Running backtest simulation...
+2025-09-27 23:40:54,245 - INFO - ============================================================
+2025-09-27 23:40:54,245 - INFO - Starting trading cycle
+2025-09-27 23:40:54,246 - INFO - ============================================================
+2025-09-27 23:40:54,246 - INFO - Fetching market data for 7 symbols...
+2025-09-27 23:40:54,988 - INFO - Retrieved 3514 rows of market data
+2025-09-27 23:40:55,583 - INFO - Generating features...
+2025-09-27 23:40:56,171 - INFO - Generated 22 features for 3514 rows
+2025-09-27 23:40:56,172 - INFO - Generating ML predictions...
+2025-09-27 23:40:56,682 - INFO - Generated predictions for 7 symbols
+2025-09-27 23:40:56,682 - INFO - Generating trading signals...
+2025-09-27 23:40:56,694 - INFO - No trading signals generated
+2025-09-27 23:40:56,694 - INFO - No signals to execute or trading engine not available
+2025-09-27 23:40:56,694 - INFO - No trades executed this cycle
+2025-09-27 23:40:56,696 - INFO - Portfolio Value: $100,000.00
+2025-09-27 23:40:56,696 - INFO - Cash: $100,000.00
+2025-09-27 23:40:56,697 - INFO - Positions: 0
+2025-09-27 23:40:56,697 - INFO - Trading cycle completed successfully
+2025-09-28 00:06:21,551 - ERROR - Error setting up trading engine: AlpacaBroker.__init__() got multiple values for argument 'paper'
+2025-09-28 00:06:23,782 - INFO - Loaded model trained on 23 features
+2025-09-28 00:08:59,067 - ERROR - Error setting up trading engine: AlpacaBroker.__init__() got an unexpected keyword argument 'paper'
+2025-09-28 00:09:01,095 - INFO - Loaded model trained on 23 features
+2025-09-28 00:10:29,297 - ERROR - Error setting up trading engine: AlpacaBroker.__init__() takes 1 positional argument but 3 were given
+2025-09-28 00:10:31,472 - INFO - Loaded model trained on 23 features
+2025-09-28 00:11:51,278 - WARNING - Failed to connect to trading engine, using simulation
+2025-09-28 00:11:53,373 - INFO - Loaded model trained on 23 features
+2025-09-28 00:12:34,170 - INFO - Successfully connected to trading engine
+2025-09-28 00:12:36,256 - INFO - Loaded model trained on 23 features
+2025-09-28 00:12:38,506 - INFO - Running single trading cycle...
+2025-09-28 00:12:38,507 - INFO - ============================================================
+2025-09-28 00:12:38,507 - INFO - Starting trading cycle
+2025-09-28 00:12:38,508 - INFO - ============================================================
+2025-09-28 00:12:38,508 - INFO - Fetching market data for 7 symbols...
+2025-09-28 00:12:39,415 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:12:39,417 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:12:39,421 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:12:39,421 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:12:39,425 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:12:39,425 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:12:39,426 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:12:39,554 - ERROR - 
+7 Failed downloads:
+2025-09-28 00:12:39,554 - ERROR - ['META', 'AMZN', 'AAPL', 'MSFT', 'NVDA', 'GOOGL', 'TSLA']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 00:12:39,560 - WARNING - No data for symbol AAPL
+2025-09-28 00:12:39,562 - WARNING - No data for symbol MSFT
+2025-09-28 00:12:39,564 - WARNING - No data for symbol GOOGL
+2025-09-28 00:12:39,566 - WARNING - No data for symbol TSLA
+2025-09-28 00:12:39,567 - WARNING - No data for symbol AMZN
+2025-09-28 00:12:39,569 - WARNING - No data for symbol NVDA
+2025-09-28 00:12:39,571 - WARNING - No data for symbol META
+2025-09-28 00:12:39,571 - ERROR - No market data retrieved
+2025-09-28 00:12:39,572 - ERROR - Failed to fetch market data
+2025-09-28 00:13:04,358 - INFO - Successfully connected to trading engine
+2025-09-28 00:13:05,607 - INFO - Loaded model trained on 23 features
+2025-09-28 00:13:17,097 - INFO - Starting live trading system...
+2025-09-28 00:13:17,098 - INFO - Check interval: 60 minutes
+2025-09-28 00:13:17,098 - INFO - ============================================================
+2025-09-28 00:13:17,098 - INFO - Starting trading cycle
+2025-09-28 00:13:17,098 - INFO - ============================================================
+2025-09-28 00:13:17,098 - INFO - Fetching market data for 7 symbols...
+2025-09-28 00:13:17,539 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:13:17,540 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:13:17,543 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:13:17,543 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:13:17,545 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:13:17,548 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:13:17,549 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:13:17,814 - ERROR - 
+7 Failed downloads:
+2025-09-28 00:13:17,815 - ERROR - ['META', 'TSLA', 'MSFT', 'GOOGL', 'AMZN', 'AAPL', 'NVDA']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 00:13:17,821 - WARNING - No data for symbol AAPL
+2025-09-28 00:13:17,823 - WARNING - No data for symbol MSFT
+2025-09-28 00:13:17,825 - WARNING - No data for symbol GOOGL
+2025-09-28 00:13:17,827 - WARNING - No data for symbol TSLA
+2025-09-28 00:13:17,830 - WARNING - No data for symbol AMZN
+2025-09-28 00:13:17,832 - WARNING - No data for symbol NVDA
+2025-09-28 00:13:17,834 - WARNING - No data for symbol META
+2025-09-28 00:13:17,834 - ERROR - No market data retrieved
+2025-09-28 00:13:17,834 - ERROR - Failed to fetch market data
+2025-09-28 00:13:17,834 - WARNING - Trading cycle failed, continuing...
+2025-09-28 00:13:17,835 - INFO - Waiting 60 minutes until next cycle...
+2025-09-28 00:17:35,152 - INFO - Shutting down trading system...
+2025-09-28 00:17:35,164 - INFO - Trading system shutdown complete
+2025-09-28 00:17:38,462 - INFO - Successfully connected to trading engine
+2025-09-28 00:17:39,789 - INFO - Loaded model trained on 23 features
+2025-09-28 00:17:44,371 - INFO - Running single trading cycle...
+2025-09-28 00:17:44,372 - INFO - ============================================================
+2025-09-28 00:17:44,372 - INFO - Starting trading cycle
+2025-09-28 00:17:44,372 - INFO - ============================================================
+2025-09-28 00:17:44,372 - INFO - Fetching market data for 7 symbols...
+2025-09-28 00:17:44,733 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:17:44,733 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:17:44,733 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:17:44,733 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:17:44,733 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:17:44,741 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:17:44,741 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 00:17:44,951 - ERROR - 
+7 Failed downloads:
+2025-09-28 00:17:44,951 - ERROR - ['TSLA', 'META', 'MSFT', 'AMZN', 'AAPL', 'GOOGL', 'NVDA']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 00:17:44,957 - WARNING - No data for symbol AAPL
+2025-09-28 00:17:44,959 - WARNING - No data for symbol MSFT
+2025-09-28 00:17:44,960 - WARNING - No data for symbol GOOGL
+2025-09-28 00:17:44,962 - WARNING - No data for symbol TSLA
+2025-09-28 00:17:44,963 - WARNING - No data for symbol AMZN
+2025-09-28 00:17:44,966 - WARNING - No data for symbol NVDA
+2025-09-28 00:17:44,967 - WARNING - No data for symbol META
+2025-09-28 00:17:44,968 - ERROR - No market data retrieved
+2025-09-28 00:17:44,968 - ERROR - Failed to fetch market data
+2025-09-28 12:54:26,292 - INFO - Successfully connected to trading engine
+2025-09-28 12:54:29,046 - INFO - Loaded model trained on 23 features
+2025-09-28 12:54:35,720 - INFO - Running single trading cycle...
+2025-09-28 12:54:35,721 - INFO - ============================================================
+2025-09-28 12:54:35,721 - INFO - Starting trading cycle
+2025-09-28 12:54:35,722 - INFO - ============================================================
+2025-09-28 12:54:35,722 - INFO - Fetching market data for 7 symbols...
+2025-09-28 12:54:36,146 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 12:54:36,149 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 12:54:36,150 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 12:54:36,151 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 12:54:36,156 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 12:54:36,157 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 12:54:36,191 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 12:54:36,417 - ERROR - 
+7 Failed downloads:
+2025-09-28 12:54:36,417 - ERROR - ['MSFT', 'GOOGL', 'AAPL', 'NVDA', 'TSLA', 'AMZN', 'META']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 12:54:36,424 - WARNING - No data for symbol AAPL
+2025-09-28 12:54:36,426 - WARNING - No data for symbol MSFT
+2025-09-28 12:54:36,429 - WARNING - No data for symbol GOOGL
+2025-09-28 12:54:36,431 - WARNING - No data for symbol TSLA
+2025-09-28 12:54:36,433 - WARNING - No data for symbol AMZN
+2025-09-28 12:54:36,435 - WARNING - No data for symbol NVDA
+2025-09-28 12:54:36,437 - WARNING - No data for symbol META
+2025-09-28 12:54:36,440 - ERROR - No market data retrieved
+2025-09-28 12:54:36,442 - ERROR - Failed to fetch market data
+2025-09-28 19:45:10,996 - INFO - Fetching market data for 7 symbols...
+2025-09-28 19:45:11,573 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:45:11,577 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:45:11,580 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:45:11,584 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:45:11,587 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:45:11,591 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:45:11,599 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:45:11,916 - ERROR - 
+7 Failed downloads:
+2025-09-28 19:45:11,918 - ERROR - ['GOOGL', 'META', 'TSLA', 'AAPL', 'NVDA', 'AMZN', 'MSFT']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 19:45:11,964 - WARNING - No data for symbol AAPL
+2025-09-28 19:45:11,966 - WARNING - No data for symbol MSFT
+2025-09-28 19:45:11,969 - WARNING - No data for symbol GOOGL
+2025-09-28 19:45:11,973 - WARNING - No data for symbol TSLA
+2025-09-28 19:45:11,976 - WARNING - No data for symbol AMZN
+2025-09-28 19:45:11,979 - WARNING - No data for symbol NVDA
+2025-09-28 19:45:11,982 - WARNING - No data for symbol META
+2025-09-28 19:45:11,983 - ERROR - No market data retrieved
+2025-09-28 19:46:47,170 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:47,173 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:47,179 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:47,194 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:47,213 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:47,226 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:47,247 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:47,664 - ERROR - 
+7 Failed downloads:
+2025-09-28 19:46:47,666 - ERROR - ['TSLA', 'NVDA', 'AAPL', 'AMZN', 'MSFT', 'META', 'GOOGL']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 19:46:52,947 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:52,951 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:52,952 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:52,957 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:52,963 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:52,980 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:52,983 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:46:53,288 - ERROR - 
+7 Failed downloads:
+2025-09-28 19:46:53,289 - ERROR - ['MSFT', 'META', 'NVDA', 'TSLA', 'AAPL', 'AMZN', 'GOOGL']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 19:47:07,994 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:07,998 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:08,009 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:08,012 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:08,030 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:08,041 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:08,062 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:08,413 - ERROR - 
+7 Failed downloads:
+2025-09-28 19:47:08,414 - ERROR - ['META', 'TSLA', 'AMZN', 'NVDA', 'MSFT', 'GOOGL', 'AAPL']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 19:47:14,026 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:14,030 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:14,045 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:14,053 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:14,062 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:14,067 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:14,073 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:47:14,374 - ERROR - 
+7 Failed downloads:
+2025-09-28 19:47:14,375 - ERROR - ['META', 'AAPL', 'NVDA', 'GOOGL', 'AMZN', 'MSFT', 'TSLA']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 19:48:51,659 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:48:51,681 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:48:51,686 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:48:51,694 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:48:51,698 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:48:51,727 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:48:51,743 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:48:52,185 - ERROR - 
+7 Failed downloads:
+2025-09-28 19:48:52,186 - ERROR - ['META', 'NVDA', 'AMZN', 'AAPL', 'GOOGL', 'MSFT', 'TSLA']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 19:49:33,987 - ERROR - Failed to get ticker 'META' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:33,994 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:34,005 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:34,006 - ERROR - Failed to get ticker 'AMZN' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:34,011 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:34,017 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:34,024 - ERROR - Failed to get ticker 'NVDA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:34,348 - ERROR - 
+7 Failed downloads:
+2025-09-28 19:49:34,350 - ERROR - ['META', 'NVDA', 'MSFT', 'GOOGL', 'TSLA', 'AAPL', 'AMZN']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+2025-09-28 19:49:52,075 - ERROR - Failed to get ticker 'MSFT' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:52,079 - ERROR - Failed to get ticker 'GOOGL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:52,083 - ERROR - Failed to get ticker 'TSLA' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:52,086 - ERROR - Failed to get ticker 'AAPL' reason: Expecting value: line 1 column 1 (char 0)
+2025-09-28 19:49:52,464 - ERROR - 
+4 Failed downloads:
+2025-09-28 19:49:52,466 - ERROR - ['GOOGL', 'MSFT', 'AAPL', 'TSLA']: JSONDecodeError('Expecting value: line 1 column 1 (char 0)')

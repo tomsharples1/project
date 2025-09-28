@@ -70,7 +70,7 @@ for sym in tickers:
 if not parts:
     raise Exception("No market data retrieved!")
 
-ohlcv = pd.concat(parts).swaplevel(0, 1).sort_index()
+ohlcv = pd.concat(parts).sort_index() # removing swap level
 print(f"\nTotal dataset: {len(ohlcv)} rows across {len(tickers)} symbols")
 
 # Save raw data
